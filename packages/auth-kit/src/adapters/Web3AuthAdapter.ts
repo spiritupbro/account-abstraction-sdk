@@ -1,4 +1,4 @@
-import { CHAIN_NAMESPACES } from '@web3auth/base'
+import { CHAIN_NAMESPACES,WALLET_ADAPTERS } from '@web3auth/base'
 import { Web3Auth } from '@web3auth/modal'
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
 import { ExternalProvider } from '@ethersproject/providers'
@@ -31,7 +31,7 @@ export default class Web3AuthAdapter implements SafeAuthClient {
    * @throws Error if there was an error initializing Web3Auth
    */
   async init() {
-    try {
+
       const web3auth = new Web3Auth({
         clientId: this.config.clientId,
         web3AuthNetwork: this.config.network,
@@ -60,13 +60,40 @@ export default class Web3AuthAdapter implements SafeAuthClient {
 
       web3auth.configureAdapter(openloginAdapter)
 
-      await web3auth.initModal()
+      await web3auth.initModal({
+        modalConfig: {
+          [WALLET_ADAPTERS.OPENLOGIN]: {
+            label: "openlogin",
+             showOnModal: true,
+          },
+          [WALLET_ADAPTERS.WALLET_CONNECT_V1]: {
+            label:"walletconnectv1",
+            showOnModal: true,
+          },
+          [WALLET_ADAPTERS.WALLET_CONNECT_V2]: {
+            label:"walletconnectv2",
+            showOnModal: true,
+          },
+          [WALLET_ADAPTERS.TORUS_EVM]: {
+            label:"walletconnectv1",
+            showOnModal: false,
+            showOnDesktop:false,
+            showOnMobile:false
+          },
+          [WALLET_ADAPTERS.METAMASK]: {
+            label:"metamask",
+            showOnModal: true,
+          },
+          [WALLET_ADAPTERS.COINBASE]: {
+            label:"coinbase",
+            showOnModal: true,
+          },
+        },
+      })
 
       this.provider = web3auth.provider
       this.web3authInstance = web3auth
-    } catch {
-      throw new Error('There was an error initializing Web3Auth')
-    }
+    
   }
 
   /**

@@ -1,6 +1,6 @@
 {
-  "name": "@safe-global/auth-kit",
-  "version": "0.1.0-alpha.2",
+  "name": "@spiritbro1/auth-kit",
+  "version": "0.0.4",
   "description": "Authentication library for web2 logins",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -51,5 +51,8 @@
     "@web3auth/base": "^4.3.0",
     "@web3auth/modal": "^4.3.1",
     "@web3auth/openlogin-adapter": "^4.3.0"
+  },
+  "directories": {
+    "example": "example"
   }
 }
